@@ -24,22 +24,22 @@ public class CalculatorController {
 
         @GetMapping("/calculator/plus")
         public String plusCalc(@RequestParam("num1") int num1, @RequestParam("num2") int num2) {
-            return calculatorService.plusCalc(num1, num2);
+            return num1 + " + " + num2 + " = " + calculatorService.plusCalc(num1, num2);
         }
 
         @GetMapping("/calculator/minus")
         public String minusCalc(@RequestParam("num1") int num1, @RequestParam("num2") int num2) {
-            return calculatorService.minusCalc(num1, num2);
+            return num1 + " - " + num2 + " = " + calculatorService.minusCalc(num1, num2);
         }
 
         @GetMapping("/calculator/multiply")
         public String multiply(@RequestParam("num1") int num1, @RequestParam("num2") int num2) {
-            return calculatorService.multiply(num1, num2);
+            return num1 + " * " + num2 + " = " + calculatorService.multiply(num1, num2);
         }
 
         @GetMapping("/calculator/divide")
         public String divide(@RequestParam("num1") int num1, @RequestParam("num2") int num2) {
-            return calculatorService.divide(num1, num2);
+            return num1 + " / " + num2 + " = " + calculatorService.divide(num1, num2);
         }
 
         @ExceptionHandler(ArithmeticException.class)
