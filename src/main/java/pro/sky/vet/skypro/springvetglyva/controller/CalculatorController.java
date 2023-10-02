@@ -4,40 +4,50 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import pro.sky.vet.skypro.springvetglyva.servicecalc.api.IService;
 import pro.sky.vet.skypro.springvetglyva.servicecalc.calcservice.CalculatorService;
+
 
 
 @RestController
 public class CalculatorController {
-    private final CalculatorService calculatorService = new CalculatorService();
+    private final IService calculatorService;
 
-    @GetMapping(path = "/calculator")
-    public String HelloCalc() {
-        return calculatorService.HelloCalc();
+    public CalculatorController(IService service) {
+        this.calculatorService = service;
     }
 
-    @GetMapping(path = "/calculator/plus")
-    public String PlusCalc(@RequestParam("num1") int num1, @RequestParam("num2") int num2) {
-        return calculatorService.PlusCalc(num1, num2);
+        @GetMapping("/calculator")
+        public String helloCalc() {
+            return "Добро пожаловать в калькулятор";
+        }
+
+        @GetMapping("/calculator/plus")
+        public String plusCalc(@RequestParam("num1") int num1, @RequestParam("num2") int num2) {
+            return calculatorService.plusCalc(num1, num2);
+        }
+
+        @GetMapping("/calculator/minus")
+        public String minusCalc(@RequestParam("num1") int num1, @RequestParam("num2") int num2) {
+            return calculatorService.minusCalc(num1, num2);
+        }
+
+        @GetMapping("/calculator/multiply")
+        public String multiply(@RequestParam("num1") int num1, @RequestParam("num2") int num2) {
+            return calculatorService.multiply(num1, num2);
+        }
+
+        @GetMapping("/calculator/divide")
+        public String divide(@RequestParam("num1") int num1, @RequestParam("num2") int num2) {
+            return calculatorService.divide(num1, num2);
+        }
+
+        @ExceptionHandler(ArithmeticException.class)
+        public String divideByZero() {
+            return "На ноль делить нельзя";
+        }
     }
 
-    @GetMapping(path = "/calculator/minus")
-    public String MinusCalc(@RequestParam("num1") int num1, @RequestParam("num2") int num2) {
-        return calculatorService.MinusCalc(num1, num2);
-    }
 
-    @GetMapping(path = "/calculator/multiply")
-    public String Multiply(@RequestParam("num1") int num1, @RequestParam("num2") int num2) {
-        return calculatorService.Multiply(num1, num2);
-    }
 
-    @GetMapping(path = "/calculator/divide")
-    public String Divide(@RequestParam("num1") int num1, @RequestParam("num2") int num2) {
-        return calculatorService.Divide(num1, num2);
-    }
 
-    @ExceptionHandler(ArithmeticException.class)
-    public String DivideByZero() {
-        return "На ноль делить нельзя";
-    }
-}
